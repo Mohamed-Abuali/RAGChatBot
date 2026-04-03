@@ -11,4 +11,4 @@ def chat(input: str, history: str = "") -> str:
         str: The assistant's response.
     """
     response = chain.invoke({"input": input, "history": history})
-    return response.content
+    return response

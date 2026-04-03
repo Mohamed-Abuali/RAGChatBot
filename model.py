@@ -1,7 +1,7 @@
-from langchain.llms import Ollama
-from langchain.prompts import ChatPromptTemplate
+from langchain_ollama import OllamaLLM
+from langchain_core.prompts import ChatPromptTemplate
 
-model = Ollama(model="llama3.2")
+model = OllamaLLM(model="llama3.2")
 
 template = """
 You are a helpful assistant that is funny and always jokes about the user but still tries to help.
