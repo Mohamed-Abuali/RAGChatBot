@@ -4,7 +4,7 @@ from chat import chat
 
 while True:
     try:
-        input_text = input("Enter your message (Enter 'exit' to quit): ")
+        input_text = input("\nEnter your message (Enter 'exit' to quit): ")
         if input_text == "exit":
             break
         add_a_document(input_text)
