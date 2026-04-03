@@ -4,11 +4,12 @@ from chat import chat
 
 while True:
     try:
-        input_text = input("\nEnter your message (Enter 'exit' to quit): ")
+        input_text = input("\nEnter your message (Enter 'exit' to quit): \n")
         if input_text == "exit":
             break
         add_a_document(input_text)
         retrieval = retrieve_document(input_text)
+        print("\nAssistant:", end="")
         for chat_response in chat(input_text, retrieval):
             add_a_document(chat_response)
             print(chat_response, end="")
