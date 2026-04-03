@@ -11,6 +11,6 @@ while True:
         retrieval = retrieve_document(input_text)
         for chat_response in chat(input_text, retrieval):
             add_a_document(chat_response)
-            print(chat_response, end=" ")
+            print(chat_response, end="")
     except Exception as e:
         print(f"Error: {e}")
