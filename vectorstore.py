@@ -20,20 +20,22 @@ def add_a_document(document) -> None:
     Args:
         document (str): The document to add.
     """
-    documents = []
-    ids = []
-    if add_document:
-        documents.append(
-            Document(
-                page_content=document,
-                metadata={"source": "local"},
-                id=str(len(document)),
+    try:
+        documents = []
+        ids = []
+        if add_document:
+            documents.append(
+                Document(
+                    page_content=document,
+                    metadata={"source": "local"},
+                    id=str(len(document)),
+                    )
                 )
-            )
-        ids.append(str(len(document)))
-    if add_document:
-        vectorstore.add_documents(documents)
-    
+            ids.append(str(len(document)))
+        if add_document:
+            vectorstore.add_documents(documents)
+    except Exception as e:
+        raise Exception(f"Error adding document: {e}")
     
 def retrieve_document(query: str):
     """
@@ -41,11 +43,14 @@ def retrieve_document(query: str):
 
     Args:
         query (str): The query to retrieve.
+    
     """
-    retrieval = vectorstore.as_retriever(
-        search_type="similarity",
-        search_kwargs={"k": 5},
-    )
-    return retrieval.invoke(query)
-
+    try:
+        retrieval = vectorstore.as_retriever(
+            search_type="similarity",
+            search_kwargs={"k": 5},
+        )
+        return retrieval.invoke(query)
+    except Exception as e:
+        raise Exception(f"Error retrieving document: {e}")
         
