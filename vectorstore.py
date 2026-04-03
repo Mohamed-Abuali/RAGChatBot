@@ -8,8 +8,12 @@ embeddings = OllamaEmbeddings(model="mxbai-embed-large")
 
 vector_location = "./vectorstore"
 add_document = not os.path.exists(vector_location)
-
-def add_document_to_vectorstore(document) -> None:
+vectorstore = Chroma(
+            collection_name="rag_chat",
+            embedding_function=embeddings,
+            persist_directory=vector_location,
+    )
+def add_a_document(document) -> None:
     """
     Add a document to the vectorstore.
 
@@ -27,19 +31,21 @@ def add_document_to_vectorstore(document) -> None:
                 )
             )
         ids.append(str(len(document)))
-
-
-    vectorstore = Chroma(
-            collection_name="rag_chat",
-            embedding_function=embeddings,
-            persist_directory=vector_location,
-    )
     if add_document:
         vectorstore.add_documents(documents)
+    
+    
+def retrieve_document(query: str) -> None:
+    """
+    Retrieve a document from the vectorstore.
+
+    Args:
+        query (str): The query to retrieve.
+    """
     retrieval = vectorstore.as_retriever(
         search_type="similarity",
         search_kwargs={"k": 5},
     )
-    return retrieval
+    return retrieval.invoke(query)
 
         
