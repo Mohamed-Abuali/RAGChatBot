@@ -1,5 +1,6 @@
 from model import chain
 def chat(input: str, history: str = "") -> str:
+    response = []
     """
     Chat with the assistant.
 
@@ -10,5 +11,7 @@ def chat(input: str, history: str = "") -> str:
     Returns:
         str: The assistant's response.
     """
-    response = chain.invoke({"input": input, "history": history})
+    #response = chain.invoke({"input": input, "history": history})
+    for text in chain.stream({"input": input, "history": history}):
+        response.append(text)
     return response

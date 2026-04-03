@@ -8,6 +8,6 @@ while True:
         break
     add_a_document(input_text)
     retrieval = retrieve_document(input_text)
-    chat_response = chat(input_text, retrieval)
-    add_a_document(chat_response)
-    print(chat_response)
+    for chat_response in chat(input_text, retrieval):
+        add_a_document(chat_response)
+        print(chat_response, end=" ")
