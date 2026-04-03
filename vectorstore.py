@@ -35,7 +35,7 @@ def add_a_document(document) -> None:
         vectorstore.add_documents(documents)
     
     
-def retrieve_document(query: str) -> None:
+def retrieve_document(query: str):
     """
     Retrieve a document from the vectorstore.
 
