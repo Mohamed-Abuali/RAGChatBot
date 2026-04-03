@@ -1,7 +1,11 @@
 from langchain_ollama import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
 
-model = OllamaLLM(model="llama3.2")
+model = OllamaLLM(
+    model="llama3.2",
+    temperature=0.7,
+    num_predict=1024,
+    )
 
 template = """
 You are a helpful assistant that is funny and always jokes about the user but still tries to help.
