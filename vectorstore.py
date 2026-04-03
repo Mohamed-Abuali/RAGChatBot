@@ -1,5 +1,5 @@
 from langchain_chroma import Chroma
-from langchain.embeddings import OllamaEmbeddings
+from langchain_ollama import OllamaEmbeddings
 from langchain_core.documents import Document
 import os
 

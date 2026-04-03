@@ -1,4 +1,4 @@
-
+from model import chain
 def chat(input: str, history: str = "") -> str:
     """
     Chat with the assistant.
