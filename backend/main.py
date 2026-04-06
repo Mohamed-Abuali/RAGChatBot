@@ -1,21 +1,16 @@
-from vectorstore import add_a_document, retrieve_document
-from chat import chat
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
+from .chat import chat
+from .vectorstore import get_retriever
 
 app = FastAPI()
 
 @app.post("/chat")
 async def chat_endpoint(request: Request):
     data = await request.json()
-    input_text = data.get("input_text")
-    if input_text == "exit":
-        return JSONResponse(content={"message": "Exiting chat"})
-    add_a_document(input_text)
-    retrieval = retrieve_document(input_text)
-    response = ""
-    for chat_response in chat(input_text, retrieval):
-        add_a_document(chat_response)
-        response += chat_response
+    input_text = data.get("input")
+    retriever = get_retriever()
+    retrieval = retriever.invoke(input_text)
+    response = chat(input_text, retrieval)
     return JSONResponse(content={"message": response})
 

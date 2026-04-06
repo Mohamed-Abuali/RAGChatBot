@@ -1,19 +1,33 @@
 from langchain_ollama import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.runnables import Runnable
 
-model = OllamaLLM(
-    model="llama3.2",
-    temperature=0.7,
-    num_predict=1024,
-    )
+# Global variables to hold the chain and its components to avoid re-initializing.
+_model = None
+_prompt = None
+_chain = None
 
-template = """
-You are a helpful assistant that is funny and always jokes about the user but still tries to help.
-message from the user: {input}
-the data form the user history conversation: {history}
-"""
+def get_chain() -> Runnable:
+    """
+    Initializes and returns the LangChain chain.
+    This function ensures that the chain is only created once.
+    """
+    global _chain, _prompt, _model
+    if _chain is None:
+        template = """
+        You are a helpful assistant that is funny and always jokes about the user but still tries to help.
+        message from the user: {input}
+        the data form the user history conversation: {history}
+        """
+        _prompt = ChatPromptTemplate.from_template(template)
 
-prompt = ChatPromptTemplate.from_template(template)
+        # Note: "llama3.2" seems like an unusual model name. It might be a typo for "llama3".
+        # Ensure the model name is correct and that your Ollama server is running with this model available.
+        _model = OllamaLLM(
+            model="llama3",
+            temperature=0.7,
+            num_predict=1024,
+        )
 
-
-chain = prompt | model
+        _chain = _prompt | _model
+    return _chain
