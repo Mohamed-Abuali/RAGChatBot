@@ -21,10 +21,9 @@ def get_chain() -> Runnable:
         """
         _prompt = ChatPromptTemplate.from_template(template)
 
-        # Note: "llama3.2" seems like an unusual model name. It might be a typo for "llama3".
-        # Ensure the model name is correct and that your Ollama server is running with this model available.
+
         _model = OllamaLLM(
-            model="llama3",
+            model="llama3.2",
             temperature=0.7,
             num_predict=1024,
         )
